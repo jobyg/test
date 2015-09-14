@@ -1,3 +1,6 @@
+class CustomException < StandardError
+end
+
 print "please enter number:"
 input_string = gets;
 orig_string = input_string;
@@ -11,8 +14,19 @@ end
 input_string = input_string.gsub(/\\n/,delimiter)
 input_array = input_string.split(delimiter).map(&:to_i);
 sum = 0 ;
+valid_input = true
+message = 'invalid input:'
 for number in input_array
-    sum += number;
+    if ( number > 0  )
+        sum += number;
+    else
+        valid_input = false;
+        message << ",";
+        message << number.to_s;
+    end
+end
+if (valid_input == false)
+   raise CustomException, message
 end
 print "input string:" ,orig_string ,"\n"
 print "sum:" ,sum ,"\n"
